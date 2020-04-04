@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @note.name %>
+</p>
+
+<p>
+  <strong>Birthday:</strong>
+  <%= @note.birthday %>
+</p>
+
+<p>
+  <strong>Where from:</strong>
+  <%= @note.where_from %>
+</p>
+
+<p>
+  <strong>Hobby:</strong>
+  <%= @note.hobby %>
+</p>
+
+<p>
+  <strong>Detail:</strong>
+  <%= @note.detail %>
+</p>
+
+<%= link_to 'Edit', edit_note_path(@note) %> |
+<%= link_to 'Back', notes_path %>
