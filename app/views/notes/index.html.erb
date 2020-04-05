@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-    <% @notes.each do |note| %>
+    <% current_user.notes.each do |note| %>
       <tr>
         <td><%= note.name %></td>
         <td><%= note.birthday %></td>
