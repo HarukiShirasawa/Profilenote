@@ -17,7 +17,9 @@
   <tbody>
     <% current_user.notes.each do |note| %>
       <tr>
-        <td><%= image_tag note.image.to_s %></td>
+        <td><%=  link_to note.image.to_s, 'data-lightbox': note.image.to_s do %>
+          <%= image_tag note.image.to_s, height: '250', :style=>"width:300;" %>
+        <% end %></td>
         <td><%= note.name %></td>
         <td><%= note.birthday %></td>
         <td><%= note.where_from %></td>
