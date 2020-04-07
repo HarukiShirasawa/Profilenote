@@ -2,9 +2,16 @@
 
 <h1>Notes</h1>
 
+<div id="tag_cloud">
+  <% tag_cloud Note.tag_counts, %w{s m l} do |tag, css_class| %>
+    <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+  <% end %>
+</div>
+
 <table>
   <thead>
     <tr>
+      <th>写真</th>
       <th>Name</th>
       <th>Birthday</th>
       <th>Where from</th>
@@ -14,23 +21,45 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% current_user.notes.each do |note| %>
-      <tr>
-        <td><%=  link_to note.image.to_s, 'data-lightbox': note.image.to_s do %>
-          <%= image_tag note.image.to_s, height: '250', :style=>"width:300;" %>
-        <% end %></td>
-        <td><%= note.name %></td>
-        <td><%= note.birthday %></td>
-        <td><%= note.where_from %></td>
-        <td><%= note.hobby %></td>
-        <td><%= note.detail %></td>
-        <td><%= link_to 'Show', note %></td>
-        <td><%= link_to 'Edit', edit_note_path(note) %></td>
-        <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% if params[:tag] %>
+    <tbody>
+      <% current_user.notes.tagged_with("#{params[:tag]}").each do |note| %>
+        <tr>
+          <td><%=  link_to note.image.to_s, 'data-lightbox': note.image.to_s do %>
+            <%= image_tag note.image.to_s, height: '250', :style=>"width:300;" %>
+          <% end %></td>
+          <td><%= note.name %></td>
+          <td><%= raw note.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></td>
+          <td><%= note.birthday %></td>
+          <td><%= note.where_from %></td>
+          <td><%= note.hobby %></td>
+          <td><%= note.detail %></td>
+          <td><%= link_to 'Show', note %></td>
+          <td><%= link_to 'Edit', edit_note_path(note) %></td>
+          <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <tbody>
+      <% current_user.notes.each do |note| %>
+        <tr>
+          <td><%=  link_to note.image.to_s, 'data-lightbox': note.image.to_s do %>
+            <%= image_tag note.image.to_s, height: '250', :style=>"width:300;" %>
+          <% end %></td>
+          <td><%= note.name %></td>
+          <td><%= raw note.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></td>
+          <td><%= note.birthday %></td>
+          <td><%= note.where_from %></td>
+          <td><%= note.hobby %></td>
+          <td><%= note.detail %></td>
+          <td><%= link_to 'Show', note %></td>
+          <td><%= link_to 'Edit', edit_note_path(note) %></td>
+          <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
 </table>
 
 <br>

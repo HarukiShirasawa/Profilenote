@@ -20,6 +20,11 @@
     <%= form.label :写真 %>
     <%= form.file_field :image %>
   </div>
+  
+  <div class="field">
+    <%= form.label :tag_list %>
+    <%= form.text_field :tag_list, value: @note.tag_list.join(','), class: "form-control" %>
+  </div>
 
   <div class="field">
     <%= form.label :birthday %>
