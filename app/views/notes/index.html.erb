@@ -17,6 +17,7 @@
   <tbody>
     <% current_user.notes.each do |note| %>
       <tr>
+        <td><%= image_tag note.image.to_s %></td>
         <td><%= note.name %></td>
         <td><%= note.birthday %></td>
         <td><%= note.where_from %></td>
