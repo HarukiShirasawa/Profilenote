@@ -1,9 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Notes</h1>
+<%= form_tag(notes_path, :method => 'get' ) do %>
+  <%= text_field_tag :search %>
+  <%= submit_tag 'Search', :name => nil %>
+<% end %>
 
 <div id="tag_cloud">
-  <% tag_cloud Note.tag_counts, %w{s m l} do |tag, css_class| %>
+  <% tag_cloud current_user.notes.tag_counts, %w{s m l} do |tag, css_class| %>
     <%= link_to tag.name, tag_path(tag.name), class: css_class %>
   <% end %>
 </div>

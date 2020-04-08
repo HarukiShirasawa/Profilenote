@@ -6,7 +6,8 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.json
   def index
-    @notes = Note.all
+    @notes = Note.where(activated: true).search(params[:search])
+    @tags = Note.tag_counts_on(:tags)
   end
 
   # GET /notes/1
@@ -74,6 +75,6 @@ class NotesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def note_params
-      params.require(:note).permit(:name, :birthday, :where_from, :hobby, :detail, :image, :tag_list)
+      params.require(:note).permit(:name, :birthday, :where_from, :hobby, :detail, :image, :tag_list, :image_cache, :remove_image)
     end
 end

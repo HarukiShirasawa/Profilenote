@@ -16,10 +16,13 @@
     <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= form.label :写真 %>
+  <% if @note.persisted? && @note.image? %>
+    <%= image_tag @note.image.to_s %>
+    <label><%= form.check_box :remove_image %> 画像を削除</label>
+  <% else %>
+    <%= form.hidden_field :image_cache %>
+  <% end %>
     <%= form.file_field :image %>
-  </div>
   
   <div class="field">
     <%= form.label :tag_list %>
