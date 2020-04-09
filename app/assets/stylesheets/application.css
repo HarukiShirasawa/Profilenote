@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+.brand-logo{
+  margin-top:15px;
+}
+
+.container{
+  padding-left:20%;
+}
+
+.new_note{
+  margin-right:0px;
+  padding-right:0px;
+  float:right;
+}

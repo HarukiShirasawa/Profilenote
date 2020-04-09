@@ -12,17 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label "名前" %>
     <%= form.text_field :name %>
   </div>
   
   <div class="field image">
     <%= form.label '人物写真' %>
-  
-      <!--// id "file"で、fileとdivを紐付けクリック時に連動-->
+
       <div id="img_field" onClick="$('#file').click()" >
-  
-        <!--// 画像があるときは画像を表示する-->
+
         <% if @note.image.url.present? %>
           <%= image_tag(@note.image.url) %>
         <% else %>
@@ -31,37 +29,36 @@
   
       </div>
     
-    <!--// id "file"をつけ、「display:none;」で隠す-->
     <%= form.file_field :image, class: "image", style: "display:none;", id: "file"%>
   </div>
 
   
   <div class="field">
-    <%= form.label :tag_list %>
+    <%= form.label "タグ（カンマでつなぐことで複数入力できます）" %>
     <%= form.text_field :tag_list, value: @note.tag_list.join(','), class: "form-control" %>
   </div>
 
   <div class="field">
-    <%= form.label :birthday %>
+    <%= form.label "誕生日（yyyymmddで入力してください）" %>
     <%= form.number_field :birthday %>
   </div>
 
   <div class="field">
-    <%= form.label :where_from %>
+    <%= form.label "出身" %>
     <%= form.text_field :where_from %>
   </div>
 
   <div class="field">
-    <%= form.label :hobby %>
+    <%= form.label "趣味" %>
     <%= form.text_area :hobby %>
   </div>
 
   <div class="field">
-    <%= form.label :detail %>
+    <%= form.label "詳細" %>
     <%= form.text_area :detail %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= button_tag class: 'btn waves-effect waves-light' do %>
+    <%= content_tag :i, "send", class: "material-icons right" %>登録
+  <% end %>
 <% end %>

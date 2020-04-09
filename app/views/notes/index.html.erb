@@ -1,70 +1,61 @@
 <p id="notice"><%= notice %></p>
 
-<%= form_with(url: root_path, local: true, method: :get, class: "search-form") do |form| %>
-  <%= form.text_field :name, placeholder: "人物を検索する", class: "search-input" %>
-  <%= form.submit "検索", class: "search-btn" %>
-<% end %>
-
 <div id="tag_cloud">
-  <% tag_cloud current_user.notes.tag_counts, %w{s m l} do |tag, css_class| %>
+  使用タグ一覧:<% tag_cloud current_user.notes.tag_counts, %w{s m l} do |tag, css_class| %>
     <%= link_to tag.name, tag_path(tag.name), class: css_class %>
   <% end %>
 </div>
-
-<table>
-  <thead>
-    <tr>
-      <th>写真</th>
-      <th>Name</th>
-      <th>Birthday</th>
-      <th>Where from</th>
-      <th>Hobby</th>
-      <th>Detail</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
   <% if params[:tag] %>
-    <tbody>
-      <% current_user.notes.tagged_with("#{params[:tag]}").each do |note| %>
-        <tr>
-          <td><%=  link_to note.image.to_s, 'data-lightbox': note.image.to_s do %>
+    <% current_user.notes.tagged_with("#{params[:tag]}").each do |note| %>
+      <div class="card col s6 m4 l4">
+        <div class="card-image waves-effect waves-block waves-light">
+          <%=  link_to note.image.to_s, 'data-lightbox': note.image.to_s do %>
             <%= image_tag note.image.to_s, height: '250', :style=>"width:300;" %>
-          <% end %></td>
-          <td><%= note.name %></td>
-          <td><%= raw note.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></td>
-          <td><%= note.birthday %></td>
-          <td><%= note.where_from %></td>
-          <td><%= note.hobby %></td>
-          <td><%= note.detail %></td>
-          <td><%= link_to 'Show', note %></td>
-          <td><%= link_to 'Edit', edit_note_path(note) %></td>
-          <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
+          <% end %>
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4"><%= note.name %><i class="material-icons right">more_vert</i></span>
+          <%= link_to '編集', edit_note_path(note) %>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4"><%= note.name %><i class="material-icons right">close</i></span>
+          <p><%= raw note.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></p>
+          <p class="birthday">
+            <%= (Date.today.strftime("%Y%m%d").to_i - note.birthday.to_i) / 10000 %>歳
+            <%= note.birthday %>生まれ
+          </p>
+          <p><%= note.where_from %>出身</p>
+          <p>趣味:<%= note.hobby %></p>
+          <p>備考:<%= note.detail %></p>
+        </div>
+        <%= link_to '削除', note, method: :delete, data: { confirm: '本当に削除しますか?' } %>
+      </div>
+    <% end %>
   <% else %>
-    <tbody>
-      <% current_user.notes.each do |note| %>
-        <tr>
-          <td><%=  link_to note.image.to_s, 'data-lightbox': note.image.to_s do %>
+    <% current_user.notes.each do |note| %>
+      <div class="card col s3 m4 l8">
+        <div class="card-image waves-effect waves-block waves-light">
+          <%=  link_to note.image.to_s, 'data-lightbox': note.image.to_s do %>
             <%= image_tag note.image.to_s, height: '250', :style=>"width:300;" %>
-          <% end %></td>
-          <td><%= note.name %></td>
-          <td><%= raw note.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></td>
-          <td><%= note.birthday %></td>
-          <td><%= note.where_from %></td>
-          <td><%= note.hobby %></td>
-          <td><%= note.detail %></td>
-          <td><%= link_to 'Show', note %></td>
-          <td><%= link_to 'Edit', edit_note_path(note) %></td>
-          <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
+          <% end %>
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4"><%= note.name %><i class="material-icons right">more_vert</i></span>
+          <%= link_to '編集', edit_note_path(note) %>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4"><%= note.name %><i class="material-icons right">close</i></span>
+          <p><%= raw note.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></p>
+          <p class="birthday">
+            <%= (Date.today.strftime("%Y%m%d").to_i - note.birthday.to_i) / 10000 %>歳
+            <%= note.birthday %>生まれ
+          </p>
+          <p><%= note.where_from %>出身</p>
+          <p>趣味:<%= note.hobby %></p>
+          <p>備考:<%= note.detail %></p>
+        </div>
+        <%= link_to '削除', note, method: :delete, data: { confirm: '本当に削除しますか?' } %>
+      </div>
+    <% end %>
   <% end %>
-</table>
-
-<br>
-
-<%= link_to 'New Note', new_note_path %>
+</div>

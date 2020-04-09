@@ -17,6 +17,14 @@
 //= require jquery
 //= require jquery_ujs
 
+require('dotenv').config();
+
+$(function(){
+  $('#container').masonry({
+    itemSelector : '.item'
+  });
+});
+
 $(function(){
   $fileField = $('#file')
  

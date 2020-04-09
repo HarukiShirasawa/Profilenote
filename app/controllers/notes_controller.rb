@@ -1,7 +1,6 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!   
-
+  before_action :authenticate_user!
 
   # GET /notes
   # GET /notes.json
@@ -38,7 +37,7 @@ class NotesController < ApplicationController
     @note.user = current_user
     respond_to do |format|
       if @note.save
-        format.html { redirect_to @note, notice: 'Note was successfully created.' }
+        format.html { redirect_to root_path, notice: 'ノートが作成されました' }
         format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new }
@@ -52,7 +51,7 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html { redirect_to @note, notice: 'Note was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'ノートが更新されました' }
         format.json { render :show, status: :ok, location: @note }
       else
         format.html { render :edit }
