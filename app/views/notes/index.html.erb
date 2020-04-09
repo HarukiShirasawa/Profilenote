@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<%= form_tag(notes_path, :method => 'get' ) do %>
-  <%= text_field_tag :search %>
-  <%= submit_tag 'Search', :name => nil %>
+<%= form_with(url: root_path, local: true, method: :get, class: "search-form") do |form| %>
+  <%= form.text_field :name, placeholder: "人物を検索する", class: "search-input" %>
+  <%= form.submit "検索", class: "search-btn" %>
 <% end %>
 
 <div id="tag_cloud">

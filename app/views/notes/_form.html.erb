@@ -15,14 +15,26 @@
     <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
+  
+  <div class="field image">
+    <%= form.label '人物写真' %>
+  
+      <!--// id "file"で、fileとdivを紐付けクリック時に連動-->
+      <div id="img_field" onClick="$('#file').click()" >
+  
+        <!--// 画像があるときは画像を表示する-->
+        <% if @note.image.url.present? %>
+          <%= image_tag(@note.image.url) %>
+        <% else %>
+          <i class="fas fa-image"></i><i class="fas fa-file-upload add"></i>
+        <% end %>
+  
+      </div>
+    
+    <!--// id "file"をつけ、「display:none;」で隠す-->
+    <%= form.file_field :image, class: "image", style: "display:none;", id: "file"%>
+  </div>
 
-  <% if @note.persisted? && @note.image? %>
-    <%= image_tag @note.image.to_s %>
-    <label><%= form.check_box :remove_image %> 画像を削除</label>
-  <% else %>
-    <%= form.hidden_field :image_cache %>
-  <% end %>
-    <%= form.file_field :image %>
   
   <div class="field">
     <%= form.label :tag_list %>

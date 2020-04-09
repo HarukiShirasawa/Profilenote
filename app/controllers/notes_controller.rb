@@ -6,7 +6,11 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.json
   def index
-    @notes = Note.where(activated: true).search(params[:search])
+    if params[:name]
+      Note.where(['name LIKE ?', "%#{params[:name]}%"])
+    else
+      Note.all
+    end
     @tags = Note.tag_counts_on(:tags)
   end
 
